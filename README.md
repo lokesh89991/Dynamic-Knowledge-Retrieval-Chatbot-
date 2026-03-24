@@ -1,64 +1,110 @@
-# ⚡ RAG AI Chatbot 
-A fully-featured, production-ready Retrieval-Augmented Generation (RAG) Artificial Intelligence Assistant. 
-Built using a modern MERN Stack + Xenova Local Embeddings + Groq Llama 3 LLM.
+# 🤖 RAG AI Chatbot
 
-## ✨ Key Features
-- **Premium Interface:** A completely overhauled React + Tailwind CSS UI utilizing Deep Dark Gradient Maps and Reactive Glassmorphism. Features drag & drop animations, custom chat bubbles, and native Markdown syntax parsing.
-- **Flawless Mathematical Parsing:** Features a dynamically scaling "Sliding Window" word-cluster algorithm during Document Chunking (chunk size 80 overlap 25). Operates completely regardless of specific string punctuation missing from uploaded PDFs or raw formatting flaws.
-- **Strict Anti-Hallucination Matrix:** Prompt engineered natively around Llama-3 parameter constraints. The LLM strictly refuses queries that lack mathematical document context, permanently preventing generic hallucinations.
-- **Fully Offline Local Embeddings:** Utilizes the lightweight local `@xenova/transformers` (`all-MiniLM-L6-v2`) algorithm directly inside Node.js to mechanically generate multi-dimensional arrays, completely eliminating external embedding API costs.
-- **High-Speed NLP Output:** Queries the retrieved Top-K mathematically relevant contexts dynamically via the incredibly fast Groq SDK (`llama-3.1-8b-instant`).
-- **Session Segregation:** Automatically sandboxes MongoDB retrieval queries to specific algorithmic `sessionId` assignments. Uploading a new document creates a fresh cryptographic session, perfectly isolating chat context and preventing "overlap" across unrelated documents.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-## 🛠️ Stack Architecture
-- **Frontend**: ReactJS, Tailwind CSS (Glassmorphism design), React-Markdown, Axios
-- **Backend**: Node.js, Express, Multer, `pdf-parse`
-- **Database**: MongoDB (Mongoose Schema mapping vectors natively)
-- **AI Processing**: `@xenova/transformers` (Local Vectoring), Groq Cloud Array (LLM Inference), Custom Math Cosine Similarity engine
+A production-ready Retrieval-Augmented Generation (RAG) Artificial Intelligence Assistant. Engineered with a modern MERN Stack, lightweight local vector embeddings, and ultra-low latency Llama-3 inference.
+
+---
+
+## ✨ Features
+
+*   **Intelligent Document Context:** Processes unstructured PDF documents using a sliding-window chunking algorithm to preserve semantic context across complex text boundaries.
+*   **Zero-Cost Local Embeddings:** Leverages `@xenova/transformers` (`all-MiniLM-L6-v2`) natively within the Node.js environment to generate vector arrays locally, eliminating reliance on paid embedding APIs.
+*   **High-Performance Inference:** Integrated with the Groq SDK (`llama-3.1-8b-instant`) for instantaneous, mathematically grounded NLP responses.
+*   **Anti-Hallucination Architecture:** Enforces strict boundary conditions via prompt engineering. The LLM is restricted exclusively to the provided vector context.
+*   **Cryptographic Session Segregation:** Isolates document vector queries into unique MongoDB session assignments, securely preventing cross-document context contamination.
+*   **Modern UI/UX:** A responsive React + Tailwind CSS frontend featuring dark mode mapping, glassmorphism, drag-and-drop file parsing, and dynamic Markdown rendering.
+
+---
+
+## 🛠️ Architecture
+
+### Frontend (Client)
+*   **Core:** React 18, Vite
+*   **Styling:** Tailwind CSS, PostCSS, Glassmorphism UI
+*   **Components:** Lucide React (Iconography), React Markdown (Response Parsing)
+*   **Networking:** Axios
+
+### Backend (Server)
+*   **Core:** Node.js, Express.js
+*   **Storage:** MongoDB, Mongoose (Native Vector Mapping)
+*   **Processing:** `@xenova/transformers` (Local Embeddings), `pdf-parse` (Text Extraction), Multer (Multipart Data)
+*   **LLM Integration:** Groq SDK
+
+---
 
 ## 📁 Repository Structure
-\`\`\`bash
-├── client/          # Frontend React Application
+
+```tree
+RAG-BOT
+├── client/                      # React Frontend Environment
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── ChatBox.jsx     # Master LLM Dialog Container
-│   │   │   ├── Message.jsx     # Markdown Context Visualizer
-│   │   │   └── UploadBox.jsx   # Drag & Drop File Parser
-│   │   └── App.jsx
-│   ├── tailwind.config.js       
-│   └── package.json
-├── server/          # Node.js + Express + MongoDB Backend
-│   ├── controllers/
-│   │   └── ragController.js    # Core RAG Vector Math, Embeddings, & Chat Engines
-│   ├── models/
-│   │   └── Document.js         # Mongoose Collection schema for Session Chunks
-│   ├── routes/
-│   └── package.json
-└── .gitignore
-\`\`\`
+│   │   │   ├── ChatBox.jsx      # LLM Dialog Interface
+│   │   │   ├── Message.jsx      # Markdown Response Renderer
+│   │   │   └── UploadBox.jsx    # Drag-and-Drop Parser
+│   │   ├── App.jsx              # Application Root
+│   │   └── main.jsx             # DOM Entry Point
+│   ├── postcss.config.js
+│   └── tailwind.config.js       # UI Design System
+└── server/                      # Node.js Backend Environment
+    ├── controllers/
+    │   └── ragController.js     # Vectorization & API Logic
+    ├── models/
+    │   └── Document.js          # MongoDB Schema definitions
+    ├── routes/
+    │   └── ragRoutes.js         # API Route handling
+    └── server.js                # Express Application Configuration
+```
 
-## 🚀 Getting Started
+---
 
-### 1. Database Variables
-In the `server/` directory, create a `.env` file referencing your endpoints:
-\`\`\`env
+## 🚀 Quick Start
+
+### 1. Environment Configuration
+
+Create a `.env` file in the `server` directory:
+
+```env
 PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster...
-GROQ_API_KEY=gsk_...
-\`\`\`
+MONGO_URI=mongodb+srv://<auth-cluster-url>
+GROQ_API_KEY=gsk_your_api_key
+```
 
-*(Note: Never push your live `.env` to GitHub. It is safely appended to `.gitignore` natively).*
+### 2. Initialization
 
-### 2. Frontend Launch
-\`\`\`bash
-cd client
-npm install
-npm run dev
-\`\`\`
-
-### 3. Backend Launch
-\`\`\`bash
+**Server:**
+```bash
 cd server
 npm install
 npm run dev
-\`\`\`
+```
+
+**Client:**
+```bash
+cd client
+npm install
+npm run dev
+```
+
+
+---
+
+## 🔌 API Reference
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/upload-file` | `POST` | Parses `.pdf` files, executes chunking/embeddings, and commits to MongoDB. |
+| `/api/add-doc` | `POST` | Ingests structural text directly for chunking and vectorization. |
+| `/api/docs` | `GET` | Fetches active vectorized document contexts parameters. |
+| `/api/ask` | `POST` | Calculates cosine similarity against isolated vectors and streams the LLM completion. |
+
+---
+
+## 📄 License
+
+Distributed under the MIT License.
